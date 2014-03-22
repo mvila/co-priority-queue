@@ -8,7 +8,7 @@ co(function *(){
   queue.push('b', 2);
   queue.push('c', 2);
 
-  // One consumer at a time:
+  // One consumer:
   console.log(yield queue.next());
   console.log(yield queue.next());
   console.log(yield queue.next());

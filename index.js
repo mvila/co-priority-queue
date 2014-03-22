@@ -4,25 +4,25 @@
 // https://github.com/segmentio/co-queue
 
 var Queue = function() {
-  this.jobs = [];
+  this.buffer = [];
   this.fns = [];
 };
 
 Queue.prototype.push = function(data, priority) {
   if (this.fns.length)
     return this.fns.shift()(null, data);
-  var job = { data: data, priority: priority };
-  var index = sortedIndex(this.jobs, job, function(job) {
-    return job.priority;
+  var item = { data: data, priority: priority };
+  var index = sortedIndex(this.buffer, item, function(item) {
+    return item.priority;
   });
-  this.jobs.splice(index, 0, job);
+  this.buffer.splice(index, 0, item);
 };
 
 Queue.prototype.next = function() {
   var that = this;
   return function(fn) {
-    if (that.jobs.length)
-      return fn(null, that.jobs.pop().data);
+    if (that.buffer.length)
+      return fn(null, that.buffer.pop().data);
     that.fns.push(fn);
   };
 };

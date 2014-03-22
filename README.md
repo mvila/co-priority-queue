@@ -1,24 +1,50 @@
-# co-retry
-Retries generators that throw an error.
+# co-priority-queue
+A simple priority queue for co.
 
 ## Installation
 In your project folder, type:
 
-    npm install co-retry
+    npm install co-priority-queue
 
 ## Example
-Suppose you have a generator function (or any yieldable object constructors supported by [co](https://github.com/visionmedia/co)):
 
-    var job = function *() {
-      console.log('Doing something...');
-      throw new Error('Failure!!!');
-    };
+Queue with one consumer:
 
-Just wrap that function with co-retry before yielding it.
+    var co = require('co');
+    var Queue = require('co-priority-queue');
 
-    var retry = require('co-retry');
+    co(function *(){
+      var queue = new Queue;
+      queue.push('a', 1);
+      queue.push('b', 2);
+      queue.push('c', 2);
+      console.log(yield queue.next());
+      console.log(yield queue.next());
+      console.log(yield queue.next());
+    })();
 
-    yield retry(job);
+The output is:
+
+    b
+    c
+    a
+
+Queue with multiple consumers:
+
+    var co = require('co');
+    var Queue = require('co-priority-queue');
+
+    co(function *(){
+      queue.push('a', 1);
+      queue.push('b', 2);
+      queue.push('c', 2);
+      var consumers = [queue.next(), queue.next(), queue.next()];
+      console.log(yield consumers);
+    })();
+
+The output is:
+
+    ['b', 'c', 'a']
 
 ## API
 ### retry(fn, [options])
