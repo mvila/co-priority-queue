@@ -1,7 +1,9 @@
 # co-priority-queue
+
 A simple priority queue for co.
 
 ## Installation
+
 In your project folder, type:
 
     npm install co-priority-queue
@@ -47,35 +49,23 @@ The output is:
     ['b', 'c', 'a']
 
 ## API
-### retry(fn, [options])
 
-co-retry will re-run your generator if it throws an error.
+### Queue()
 
-    yield retry(job);
+Create a new priority queue.
 
-If you need to call `fn` with a context and some arguments, simply use the ES5 `bind` feature.
+### Queue#push(data, priority)
 
-    yield retry(job.bind(ctx, arg1, arg2));
+Add `data` into the queue with the specified `priority`.
 
-#### Options
-The following options are available:
+### Queue#next()
 
-##### retries
-The number of times to retry `fn` before giving up and rethrowing the last error caught. *Default: 6.*
+Return the data with the highest priority. If the queue is empty, waits until a new data is added.
 
-    // In case of error, job will be called 1 + 10 times.
-    yield retry(job, { retries: 10 });
+## Credits
 
-##### interval
-The number of milliseconds to wait between attempts. *Default: 1000.*
-
-##### factor
-The factor by which the interval should be multiplied per attempt. If set to 2 with an interval of 5000, the first retry will execute after 5 seconds, the second after 10, the third after 20, and so on. *Default: 2.*
-
-This allows an exponential back-off scheme. For a smaller gap between retries, floats like 1.2 can be used to grow the interval at a slower rate.
-
-## Inspiration
-API and documentation heavily inspired from [node-attempt](https://github.com/TomFrost/node-attempt) created by Tom Frost. Thanks to him.
+API and implementation heavily inspired from [co-queue](https://github.com/segmentio/co-queue) created by Julian Gruber. Thanks to him.
 
 ## License
-co-retry is distributed under the MIT license.
+
+co-priority-queue is distributed under the MIT license.
