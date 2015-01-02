@@ -1,6 +1,6 @@
 {
   "name": "co-priority-queue",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple priority queue for co",
   "author": "Manuel Vila <mvila@3base.com>",
   "main": "index.js",
