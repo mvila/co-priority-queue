@@ -20,4 +20,6 @@ co(function *(){
   // Three parallel consumers:
   var consumers = [queue.next(), queue.next(), queue.next()];
   console.log(yield consumers);
-})();
+}).catch(function(err) {
+  console.error(err.stack);
+});
